@@ -16,44 +16,33 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Parcial - Aplicaciones Móviles',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE091E5), // Rosa suave
-          primary: const Color(0xFFE091E5),
-          secondary: const Color(0xFFF7CAE4),
+        // Paleta suave y femenina
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFE091E5)),
+        scaffoldBackgroundColor: const Color(0xFFFFFBFE),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0x00FFFFFF),
+          foregroundColor: Color(0xFF6B2A67),
+          elevation: 0,
+          centerTitle: true,
         ),
         textTheme: const TextTheme(
-          headlineMedium: TextStyle(
-            fontWeight: FontWeight.w300,
-            letterSpacing: 1.2,
-          ),
-          titleLarge: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.5,
-          ),
+          headlineSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Color(0xFF6B2A67)),
+          bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF6B2A67)),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
+            backgroundColor: const Color(0xFFE091E5),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            padding: const EdgeInsets.symmetric(vertical: 14),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
           filled: true,
           fillColor: Colors.white,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Color(0xFFE091E5), width: 2),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: const Color(0xFFE091E5).withOpacity(0.5)),
-          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+          hintStyle: const TextStyle(color: Color(0xFF9E6E9E)),
         ),
       ),
       home: const RegistrationScreen(),
@@ -88,22 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     // Optional: show SnackBar indicating registration
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Row(
-          children: [
-            Icon(Icons.check_circle_outline, color: Colors.white),
-            SizedBox(width: 8),
-            Text('Usuario Registrado',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
-        backgroundColor: Color(0xFFE091E5),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
+      const SnackBar(content: Text('Usuario Registrado')),
     );
 
     // Simple validation: require non-empty values
@@ -119,64 +93,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro de Usuario', 
-          style: TextStyle(fontWeight: FontWeight.w300, letterSpacing: 1),
-        ),
-        centerTitle: true,
-        elevation: 0,
+        title: const Text('Registro de Usuario'),
+        backgroundColor: Colors.transparent,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              const Color(0xFFF7CAE4).withOpacity(0.2),
-            ],
-          ),
-        ),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(
-                Icons.person_outline,
-                size: 80,
-                color: Color(0xFFE091E5),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icon(Icons.email_outlined, color: Color(0xFFE091E5)),
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFCEFF6),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8, offset: const Offset(0,4)),
+                    ],
+                  ),
+                  child: const Icon(Icons.person, size: 72, color: Color(0xFFE091E5)),
                 ),
               ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Contraseña',
-                  prefixIcon: Icon(Icons.lock_outline, color: Color(0xFFE091E5)),
-                ),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _register,
-                child: const Text(
-                  'Registrar',
-                  style: TextStyle(
-                    fontSize: 16,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.w500,
+              const SizedBox(height: 24),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(hintText: 'Correo electrónico'),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(hintText: 'Contraseña'),
+                      ),
+                    ],
                   ),
                 ),
               ),
-          ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _register,
+                child: const Text('Registrar', style: TextStyle(fontSize: 16)),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -231,12 +199,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementLikes() {
-  //Usamos setState para notificar al framework que la interfaz 
-  //de usuario debe reconstruirse porque el valor de 'likes' cambió. 
-  //Sin llamar a setState, el número mostrado no se actualizaría 
-  //aunque la variable cambiara. Esto es necesario porque el renderizado
-  //de Flutter es declarativo: la interfaz de usuario se reconstruye a 
-  //partir del estado en build().
+  
     setState(() {
       likes++;
     });
@@ -257,148 +220,84 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bienvenido, ${widget.email}',
-          style: const TextStyle(fontWeight: FontWeight.w300, letterSpacing: 1),
-        ),
-        centerTitle: true,
+        title: Text('Bienvenido, ${widget.email}'),
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              const Color(0xFFF7CAE4).withOpacity(0.2),
-            ],
-          ),
-        ),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    '¡Bienvenido, ${widget.email}!',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: const Color(0xFFE091E5),
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 1.2,
-                    ),
-                    textAlign: TextAlign.center,
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Text('¡Bienvenido, ${widget.email}!', style: Theme.of(context).textTheme.headlineSmall),
+              ),
+              const SizedBox(height: 20),
+              Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.favorite, color: Color(0xFFE091E5), size: 28),
+                          const SizedBox(height: 8),
+                          Text('Cantidad de Likes', style: Theme.of(context).textTheme.bodyLarge),
+                        ],
+                      ),
+                      Text('$likes', style: const TextStyle(fontSize: 28, color: Color(0xFFE091E5))),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 32),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.favorite,
-                          color: Color(0xFFE091E5),
-                          size: 40,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Cantidad de Likes: $likes',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: const Color(0xFFE091E5),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.sentiment_very_satisfied, color: Color(0xFFE091E5)),
-                            SizedBox(width: 8),
-                            Text(
-                              'Chiste del día:',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Color(0xFFE091E5),
-                              ),
+              ),
+              const SizedBox(height: 18),
+              Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(Icons.sentiment_very_satisfied, color: Color(0xFFE091E5)),
+                          SizedBox(width: 8),
+                          Text('Chiste del día:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      loadingJoke
+                          ? const Center(child: CircularProgressIndicator(color: Color(0xFFE091E5)))
+                          : Text(joke.isNotEmpty ? joke : 'No se cargó chiste'),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: _savePreference,
+                              icon: const Icon(Icons.save),
+                              label: const Text('Guardar Preferencia'),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        loadingJoke
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFE091E5)),
-                                ),
-                              )
-                            : Text(
-                                joke.isNotEmpty ? joke : 'No se cargó chiste',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  height: 1.5,
-                                ),
-                              ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      OutlinedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cerrar Sesión'),
+                        style: OutlinedButton.styleFrom(side: const BorderSide(color: Color(0xFFE091E5))),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _savePreference,
-                        icon: const Icon(Icons.settings),
-                        label: const Text(
-                          'Guardar Preferencia',
-                          style: TextStyle(letterSpacing: 0.5),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.exit_to_app),
-                        label: const Text(
-                          'Cerrar Sesión',
-                          style: TextStyle(letterSpacing: 0.5),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: const BorderSide(color: Color(0xFFE091E5)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
