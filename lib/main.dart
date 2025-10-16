@@ -142,11 +142,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementLikes() {
-    // We use setState to notify the framework that the UI should be rebuilt
-    // because the value of 'likes' changed. Without calling setState, the
-    // displayed number would not update even though the variable changed.
-    // This is necessary because Flutter's rendering is declarative: UI is
-    // rebuilt from state in build().
+  //Usamos setState para notificar al framework que la interfaz 
+  //de usuario debe reconstruirse porque el valor de 'likes' cambió. 
+  //Sin llamar a setState, el número mostrado no se actualizaría 
+  //aunque la variable cambiara. Esto es necesario porque el renderizado
+  //de Flutter es declarativo: la interfaz de usuario se reconstruye a 
+  //partir del estado en build().
     setState(() {
       likes++;
     });
